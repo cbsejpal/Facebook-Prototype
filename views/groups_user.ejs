@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <% include partials/header.ejs %>
+     <script src="/js/angularJS/groups_user.js"></script>
+     <script src="js/angularJS/leftbar.js"></script>
+  </head>
+  <body ng-app="groups_user">
+  
+  	<% include partials/top_navBar.ejs %>
+
+   <div ng-controller="group_list">
+	<div class="row row-offcanvas row-offcanvas-left">
+		<% include partials/leftbar.ejs %>
+		<div class="col-sm-10" id="main">
+		<div class="panel panel-default">
+			<div class="panel-header">
+			<h4>Groups</h4>
+			</div>
+			<div class="panel-body">
+				<ul class="list-group">
+					<li ng-hide="groupList.length">No Groups</li>
+					<button ng-repeat="item in groupList" class="list-group-item"
+						ng-click="navigateToGroup(item)">{{ item.groupname }}</button>
+				</ul>
+			</div>
+			</div><!-- panel default -->
+		</div>
+	</div>
+</div>
+<!-- /row -->
+  </body>
+</html>

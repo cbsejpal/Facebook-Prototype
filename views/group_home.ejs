@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<% include partials/header.ejs %>
+<script src="/js/angularJS/group_home.js"></script>
+<script src="js/angularJS/leftbar.js"></script>
+</head>
+<body ng-app="groups_home">
+
+	<% include partials/top_navBar.ejs %>
+
+	<div class="row row-offcanvas row-offcanvas-left">
+		<div class="col-md-2"><% include partials/leftbar.ejs%></div>
+		<div class="col-sm-10" ng-controller="group_info"
+			ng-init="getGroupInfo(<%= group_id %>)">
+
+			<div class="rwo">
+				<h1 ng-bind="groupName"></h1>
+				<h3 ng-bind="groupDesc"></h3>
+				<div class="btn btn-success" ng-show="!isMember"
+					ng-click="joinGroup()">Join</div>
+				<div class="btn btn-danger" ng-show="isMember"
+					ng-click="leaveGroup()">Leave</div>
+			</div>
+
+			<div class="col-sm-8">
+				<div class="padding">
+					<!-- content -->
+					<div class="row">
+						<!-- main col left -->
+						<div class="well" ng-show="isMember">
+							<h4>What's new in group</h4>
+							<div class="form-group">
+								<textarea class="form-control" name="post"
+									ng-model="post_status"
+									placeholder="Write something in group..."></textarea>
+							</div>
+							<button class="btn btn-primary pull-right" type="button"
+								ng-click="postInGroup();">Post</button>
+							<br>
+						</div>
+						<div class="list-group" ng-repeat="post in groupPosts">
+							<li ng-hide="groupPosts.length">No Posts</li>
+							<div class="panel panel-default">
+								<li ng-hide="groupPosts.length">No Posts</li>
+								<div class="panel-body">
+									<h5>
+										<a href="#">{{post.user}}</a>
+									</h5>
+									<p>{{post.postText}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/row-->
+			<div class="col-xs-4 col-sm-3 sidebar-offcanvas _pr0"
+				id="sidebarRight" role="navigation">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4>Members</h4>
+					</div>
+
+					<div class="panel-body _p0">
+						<div class="row groupmember_lst_panel_margin"
+							ng-repeat="people in groupMembers">
+
+							<div class="col-md-3">
+								<img src="img/profile-photo.jpg" alt="profile pic"
+									class="groupmember_lst_img_hgt">
+							</div>
+
+							<div class="col-md-9">
+								<p>
+									<a class="col-md-9 groupmember_lst_href_fnt" href="#">{{people.memberName}}</a>
+								<div class="col-md-2 glyphicon glyphicon-remove"
+									ng-show="isAdmin" ng-click="removeMember(people)"></div>
+
+
+							</div>
+
+						</div>
+					</div>
+					<!--  panel-body -->
+				</div>
+				<!-- panel -->
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>
